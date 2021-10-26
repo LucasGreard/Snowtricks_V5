@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - Log In
+{% endblock %}
+
+{% block body %}
+	<header class="py-5 bg-light border-bottom mb-4">
+		<div class="container">
+			<div class="text-center my-5">';
+				<h1 class="fw-bolder">Log in or sign up ? That is the question</h1>
+				<p class="lead mb-0 fst-italic">Nice to meet you !</p>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<form method="post">
+					{% if error %}
+						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+					{% endif %}
+					<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+					<label for="inputUserEmail">Email</label>
+					<input type="email" value="{{ last_username }}" name="userEmail" id="inputUserEmail" class="form-control" autocomplete="email" required autofocus>
+					<label for="inputPassword">Password</label>
+					<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+					<button class="btn btn-lg btn-primary" type="submit">
+						Sign in
+					</button>
+					If you don't have an account,
+					<a href="/auth/register" class="">register !</a>
+
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	My settings
+{% endblock %}
+
+{% block body %}
+	<header class="py-5 bg-light border-bottom mb-4">
+		<div class="container">
+			<div class="text-center my-5">';
+				<h1 class="fw-bolder">
+					If it's you, it's your contact details :) !
+				</h1>
+				<p class="lead mb-0 fst-italic">Modify what you want !</p>
+			</div>
+		</div>
+	</header>
+	<div class="wrapper bg-white mt-sm-5">
+		<h4 class="pb-4 border-bottom">Account settings</h4>
+		<div class="d-flex align-items-start py-3 border-bottom">
+			<img src="{{asset('/uploads/users_img/' ~ app.user.userPicture) }}" class="img" alt="">
+			<div class="pl-sm-4 pl-2" id="img-section">
+
+				<form action="edit" method="post" enctype="multipart/form-data">
+					<b>Profile Photo</b>
+					<p>Accepted file type .png. Less than 1MB</p>
+					<input type="file" name="userImgToUpload" id="userImgToUpload">
+					<input class="btn button border" type="submit" value="Upload Image" name="Upload">
+				</form>
+			</div>
+		</div>
+		<div class="py-2">
+			<div class="row py-2">
+				<div class="col-md-6">
+					{{app.user.userLastName}}
+				</div>
+				<div class="col-md-6 pt-md-0 pt-3">
+					{{app.user.userFirstName}}
+				</div>
+			</div>
+			<div class="row py-2">
+				<div class="col-md-6">
+					{{app.user.userEmail}}
+				</div>
+				<div class="col-md-6 pt-md-0 pt-3">
+					{{app.user.userPhone}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-1"></div>
+
+</div>{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	<header class="py-5 bg-light border-bottom mb-4">
+		<div class="container">
+			<div class="text-center my-5">';
+				<h1 class="fw-bolder">It's time to register !
+				</h1>
+				<p class="lead mb-0 fst-italic">We only live once, so do what you want and register !</p>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8 text-center">
+
+				{{ form_start(registrationForm) }}
+				<div class="input-group-prepend">
+					{{ form_row(registrationForm.userEmail, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(registrationForm.userLastName, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(registrationForm.userFirstName, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(registrationForm.userPhone, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					Import a Avatar
+					{{ form_row(registrationForm.userPicture, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(registrationForm.plainPassword, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="form-group text-center">
+					<button type="submit" class="btn">Register</button>
+					{{ form_end(registrationForm) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

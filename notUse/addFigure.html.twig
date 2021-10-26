@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SnowTricks - add a figure
+{% endblock %}
+
+{% block body %}
+	<header class="py-5 bg-light border-bottom mb-4">
+		<div class="container">
+			<div class="text-center my-5">';
+				<h1 class="fw-bolder">Add a figure</h1>
+				<p class="lead mb-0 fst-italic">Manage your figure as you want ! Like a boss !</p>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="col-9 text-center">
+				{{ form_start(addFigureForm) }}
+				<div class="input-group-prepend">
+					{{ form_row(addFigureForm.figureName, {'attr':{'class':'form-control', 'name': 'Test'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(addFigureForm.figureDescription, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(addFigureForm.figureAuthor, {'attr':{'readonly': 'readonly', 'class':'form-control','value': app.user.userFirstName ~ " " ~ app.user.userLastName }}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(addFigureForm.figure_Picture, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(addFigureForm.figureVideo, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="input-group-prepend">
+					{{ form_row(addFigureForm.figureGroup, {'attr':{'class':'form-control'}}) }}
+				</div>
+				<div class="form-group text-center">
+					<button type="submit" class="btn">Register</button>
+					{{ form_end(addFigureForm) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

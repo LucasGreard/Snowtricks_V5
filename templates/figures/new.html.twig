@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Figures
+{% endblock %}
+
+{% block body %}
+	<h1>Create new Figures</h1>
+
+	{{ include('figures/_form.html.twig') }}
+
+	<a href="{{ path('figures_index') }}">back to list</a>
+{% endblock %}
