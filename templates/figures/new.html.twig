@@ -4,9 +4,40 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Create new Figures</h1>
+	<header class="py-5 bg-light border-bottom mb-4">
+		<div class="container">
+			<div class="text-center my-5">';
+				<h1 class="fw-bolder">It's time to create a new figure !
+				</h1>
+				<p class="lead mb-0 fst-italic">We only live once, so do what you want and register !</p>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="col-2"></div>
+			<div class="col-8 text-center">
+				{{form_start(form)}}
+				<div class="form-control">
+					{{ form_row(form.figureName, {'attr':{'class':'form-control text-center'}}) }}
 
-	{{ include('figures/_form.html.twig') }}
+					{{ form_row(form.figureDescription, {'attr':{'class':'form-control text-center'}}) }}
 
+					<div class="dropdown-divider"></div>
+					{{ form_row(form.figureImg, {'attr':{'class':'form-control text-center'}}) }}
+
+					{{ form_row(form.figureVideo, {'attr':{'class':'form-control text-center'}}) }}
+					<div class="dropdown-divider"></div>
+					{{ form_row(form.FigureGroup, {'attr':{'class':'form-control text-center'}}) }}
+
+					{{ form_row(form.figureAuthor, {'attr':{'class':'form-control text-center'}}) }}
+				</div>
+				<div class="form-group text-center">
+					<button type="submit" class="btn">Register</button>
+				</div>
+				{{form_end(form)}}
+			</div>
+		</div>
+	</div>
 	<a href="{{ path('figures_index') }}">back to list</a>
 {% endblock %}

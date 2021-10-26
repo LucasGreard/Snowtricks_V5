@@ -4,11 +4,14 @@ namespace App\Form;
 
 use App\Entity\Figures;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints\File;
 
 class FiguresType extends AbstractType
 {
@@ -24,8 +27,12 @@ class FiguresType extends AbstractType
         $author = $user->getUserLastName() . " " . $user->getUserFirstName();
 
         $builder
-            ->add('figureName')
-            ->add('figureDescription')
+            ->add('figureName', TextType::class, [
+                'label' => "Nom de la figure"
+            ])
+            ->add('figureDescription', TextareaType::class, [
+                'label' => "Description complète"
+            ])
             ->add(
                 'figureImg',
                 FileType::class,
@@ -33,11 +40,24 @@ class FiguresType extends AbstractType
                     'label' => false,
                     'multiple' => true,
                     'mapped' => false,
-                    'required' => false
+                    'required' => false,
+                    'help' => "Vous pouvez ajouter plusieurs fichiers",
                 ]
             )
-            ->add('figureVideo')
-            ->add('FigureGroup')
+            ->add('figureVideo', TextType::class, [
+                'required' => false
+            ])
+            ->add('FigureGroup', ChoiceType::class, [
+                'choices' => [
+                    'Grab' => "Grab",
+                    'Rotations' => "Rotations",
+                    'Flips' => "Flips",
+                    'Rotations Désaxées' => "Rotations Désaxées",
+                    'Slides' => "Slides",
+                    'One foot tricks' => "One foot tricks",
+                    'Old School' => "Old School"
+                ]
+            ])
             ->add('figureAuthor', TextType::class, [
                 'attr' => [
                     'readonly' => true,

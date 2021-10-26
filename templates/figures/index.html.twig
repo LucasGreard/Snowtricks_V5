@@ -4,42 +4,33 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="row">
-			<img src="uploads/_default/landscape_snowboard.jpg" height="800px">
-		</div>
-	</div>
+	<img src="uploads/_default/landscape_snowboard.jpg" width="100%" class="img-fluid">
 
-	<div class="container">
-		<div class="row">
-			{% for figure in figures %}
-				<div class="card" style="width: 18rem;">
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		{% for figure in figures %}
+			<div class="col">
+				<div class="card h-100">
 					{% for image in figure.figureImgs|slice(0,1) %}
-						<td>
-							<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="150px">
-						</td>
+						<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" class="card-img-top" alt="...">
 					{% endfor %}
-
-
 					<div class="card-body">
-
 						<a href="{{ path('figures_show', {'id': figure.id}) }}">
 							<h5 class="card-title">{{figure.figureName}}</h5>
 						</a>
-						{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " "~ app.user.userFirstName) == figure.figureAuthor) %}
-
-							<button class="btn">
-								<a href="{{ path('figures_edit', {'id': figure.id}) }}" class="btn">edit</a>
-							</button>
-							{{ include('figures/_delete_form.html.twig') }}
+					</div>
+					<div class="card-footer text-center">
+						<small class="text-muted">Created :
+							{{figure.figureDateAdd | format_datetime()}}</small>
+						<br/>
+						<small class="text-muted ">Modified :
+							{{figure.figureDateModif | format_datetime()}}</small>
+						<br/>
+						{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " "~ app.user.userFirstName) == figure.figureAuthor or is_granted('ROLE_ADMIN')) %}
+							{{ include('figures/editAndDeleteFigure.twig') }}
 						{% endif %}
 					</div>
 				</div>
-			{% endfor %}
-		</div>
+			</div>
+		{% endfor %}
 	</div>
-	{% if is_granted('ROLE_USER') %}
-		<a href="{{ path('figures_new') }}">Create new</a>
-	{% endif %}
-
 {% endblock %}

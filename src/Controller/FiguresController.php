@@ -157,18 +157,23 @@ class FiguresController extends AbstractController
 
     private function recoverImg($figuresImg, $figure)
     {
-        foreach ($figuresImg as $figureImg) {
-            $nameImg = md5(uniqid()) . '.' . $figureImg->guessExtension();
+        $img = new FigureImg();
+        if ($figuresImg) {
+            foreach ($figuresImg as $figureImg) {
+                $nameImg = md5(uniqid()) . '.' . $figureImg->guessExtension();
 
-            $figureImg->move(
-                $this->getParameter('images_directory'),
-                $nameImg
-            );
+                $figureImg->move(
+                    $this->getParameter('images_directory'),
+                    $nameImg
+                );
 
-            $img = new FigureImg();
+
+                $img->setImgName($nameImg);
+                $figure->addFigureImg($img);
+            }
+        } else {
+            $nameImg = "../_default/figure_Default.jpg";
             $img->setImgName($nameImg);
-            return $img;
-            $figure->addFigureImg($img);
         }
     }
     private function addComment($comment, $userName, $figure)
