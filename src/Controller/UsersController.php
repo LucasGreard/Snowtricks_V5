@@ -31,7 +31,7 @@ class UsersController extends AbstractController
             $userId = $user->getUserIdentifier();
             $entityManager = $this->getDoctrine()->getManager();
             $userImg = $entityManager->getRepository(EntityUSer::class)->findOneBy(['userEmail' => $userId]);
-
+            
             $this->unlinkImg($userImg);
 
             $userImg->setUserPicture($imgNewName);
@@ -58,6 +58,7 @@ class UsersController extends AbstractController
     private function unlinkImg($userImg)
     {
         $userLastPicture = $userImg->getUserPicture();
+
         if ($userLastPicture != "../_default/userAvatar.png") {
             unlink($this->getParameter('images_directory_user') . '/' . $userLastPicture);
         } else {

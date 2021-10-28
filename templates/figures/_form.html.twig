@@ -1,4 +1,4 @@
-{# {{ form_start(form) }}
+{{ form_start(form) }}
 {{ form_widget(form) }}
 
 {% if app.request.attributes.get('_route')=='figures_edit' %}
@@ -8,7 +8,7 @@
 
 		<div>
 			<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="150px">
-			<a href="{{ path('figure_deleteImg', {id: image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">Delete</a>
+			<a href="{{ path('figure_deleteImg', {id: image.id}) }}" data-token="{{ csrf_token('delete' ~ image.id) }}" data-delete>Delete</a>
 		</div>
 
 	{% endfor %}
@@ -19,4 +19,4 @@
 {% endif %}
 
 <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }} #}
+{{ form_end(form) }}

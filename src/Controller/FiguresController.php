@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\Comments;
 use App\Entity\FigureImg;
 use App\Entity\Figures;
-use App\Entity\USer as EntityUSer;
 use App\Form\CommentsType;
+use App\Entity\USer as EntityUSer;
 use App\Form\FiguresType;
 use App\Repository\FiguresRepository;
-use DateTime;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +47,7 @@ class FiguresController extends AbstractController
             $figure->setFigureDateAdd($figureDateAdd);
 
             $figuresImg = $form->get('figureImg')->getData();
+
             $this->recoverImg($figuresImg, $figure);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -83,20 +84,32 @@ class FiguresController extends AbstractController
     /**
      * @Route("/figure/id/{id}", name="figures_show", methods={"GET", "POST"})
      */
-    public function show(Figures $figure, Request $request, EntityUSer $user): Response
+    public function show(Figures $figure, Request $request): Response
     {
-        $userName = sprintf("%s %s", $user->getUserLastName(), $user->getUserFirstName());
+        $em = $this->getDoctrine()->getManager();
+        $comments = $em->getRepository("App\Entity\Comments")->findAll();
 
-        $comment = new Comments();
-        $commentForm = $this->createForm(CommentsType::class, $comment);
-        $commentForm->handleRequest($request);
+        if ($this->getUser()) {
+            $user = $this->getUser();
+            $userName = sprintf("%s %s", $user->getUserLastName(), $user->getUserFirstName());
 
-        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
-            $this->addComment($comment, $userName, $figure);
+
+            $comment = new Comments();
+            $commentForm = $this->createForm(CommentsType::class, $comment);
+            $commentForm->handleRequest($request);
+            if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+                $this->addComment($comment, $userName, $figure, $user);
+            }
+            return $this->render('figures/show.html.twig', [
+                'figure' => $figure,
+                'commentForm' => $commentForm->createView(),
+                'comments' => $comments
+            ]);
         }
+
         return $this->render('figures/show.html.twig', [
             'figure' => $figure,
-            'commentForm' => $commentForm->createView()
+            'comments' => $comments
         ]);
     }
 
@@ -174,13 +187,16 @@ class FiguresController extends AbstractController
         } else {
             $nameImg = "../_default/figure_Default.jpg";
             $img->setImgName($nameImg);
+            $figure->addFigureImg($img);
         }
     }
-    private function addComment($comment, $userName, $figure)
+    private function addComment($comment, $userName, $figure, $user)
     {
-        $comment->setCreatedAt(new DateTime());
+        $comment->setCreatedAt(new DateTimeImmutable());
         $comment->setAuthor($userName);
         $comment->setFigure($figure);
+        $comment->setUserPicture($user->getUserPicture());
+        $comment->setUser($user);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($comment);
