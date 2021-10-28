@@ -18,26 +18,36 @@ class Comments
     private $id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
-    private $content;
+    private $Content;
 
     /**
-     * @ORM\Column(type="text")
-     * 
+     * @ORM\Column(type="string", length=255)
      */
-    private $author;
+    private $Author;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
-    private $created_at;
+    private $Created_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Figures::class, inversedBy="comments")
+     * @ORM\Column(type="string", length=255)
+     */
+    private $userPicture;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Figures::class, inversedBy="comments", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $figure;
+    private $Figure;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=USer::class, inversedBy="comments", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -46,48 +56,72 @@ class Comments
 
     public function getContent(): ?string
     {
-        return $this->content;
+        return $this->Content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(string $Content): self
     {
-        $this->content = $content;
+        $this->Content = $Content;
 
         return $this;
     }
 
-    public function getAuthor()
+    public function getAuthor(): ?string
     {
-        return $this->author;
+        return $this->Author;
     }
 
-    public function setAuthor($author): self
+    public function setAuthor(string $Author): self
     {
-        $this->author = $author;
+        $this->Author = $Author;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $Created_at): self
     {
-        $this->created_at = $created_at;
+        $this->Created_at = $Created_at;
+
+        return $this;
+    }
+
+    public function getUserPicture(): ?string
+    {
+        return $this->userPicture;
+    }
+
+    public function setUserPicture(string $userPicture): self
+    {
+        $this->userPicture = $userPicture;
 
         return $this;
     }
 
     public function getFigure(): ?Figures
     {
-        return $this->figure;
+        return $this->Figure;
     }
 
-    public function setFigure(?Figures $figure): self
+    public function setFigure(?Figures $Figure): self
     {
-        $this->figure = $figure;
+        $this->Figure = $Figure;
+
+        return $this;
+    }
+
+    public function getUser(): ?USer
+    {
+        return $this->user;
+    }
+
+    public function setUser(?USer $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

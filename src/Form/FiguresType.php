@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Validator\Constraints\File;
 
 class FiguresType extends AbstractType
 {
@@ -45,7 +44,8 @@ class FiguresType extends AbstractType
                 ]
             )
             ->add('figureVideo', TextType::class, [
-                'required' => false
+                'required' => false,
+                'help' => "Vous pouvez ajouter plusieurs vidéos séparer par une virgule (,)"
             ])
             ->add('FigureGroup', ChoiceType::class, [
                 'choices' => [

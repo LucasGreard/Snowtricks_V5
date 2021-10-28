@@ -27,17 +27,20 @@
 					{{ form_row(form.figureImg, {'attr':{'class':'form-control text-center'}}) }}
 
 					{{ form_row(form.figureVideo, {'attr':{'class':'form-control text-center'}}) }}
+					<a href='https://support.google.com/youtube/answer/171780?hl=fr'>Comment intégrer une vidéo</a>
 					<div class="dropdown-divider"></div>
 					{{ form_row(form.FigureGroup, {'attr':{'class':'form-control text-center'}}) }}
 
 					{{ form_row(form.figureAuthor, {'attr':{'class':'form-control text-center'}}) }}
-				</div>
-				<div class="form-group text-center">
-					<button type="submit" class="btn">Register</button>
+					<div class="form-group text-center">
+						<button type="submit" class="btn">Register</button>
+						<a href="{{ path('figures_index') }}">
+							->Back to list</a>
+					</div>
 				</div>
 				{{form_end(form)}}
 			</div>
 		</div>
 	</div>
-	<a href="{{ path('figures_index') }}">back to list</a>
+
 {% endblock %}

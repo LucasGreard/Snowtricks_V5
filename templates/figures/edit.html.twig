@@ -7,7 +7,7 @@
 	{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor) %}
 		<h1>Edit Figures</h1>
 		{{ include('figures/_form.html.twig', {'button_label': 'Update'}) }}
-		{{ include('figures/_delete_form.html.twig') }}
+		{{ include('figures/editAndDeleteFigure.twig') }}
 	{% endif %}
 	<a href="{{ path('figures_index') }}">back to list</a>
 

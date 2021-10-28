@@ -19,29 +19,17 @@
 			<div class="col-8 text-center">
 
 				{{ form_start(registrationForm) }}
-				<div class="input-group-prepend">
+				<div class="form-control">
 					{{ form_row(registrationForm.userEmail, {'attr':{'class':'form-control'}}) }}
-				</div>
-				<div class="input-group-prepend">
 					{{ form_row(registrationForm.userLastName, {'attr':{'class':'form-control'}}) }}
-				</div>
-				<div class="input-group-prepend">
 					{{ form_row(registrationForm.userFirstName, {'attr':{'class':'form-control'}}) }}
-				</div>
-				<div class="input-group-prepend">
-					{{ form_row(registrationForm.userPhone, {'attr':{'class':'form-control'}}) }}
-				</div>
-				<div class="input-group-prepend">
+					{{ form_row(registrationForm.userPhone, {'attr':{'class':'form-control'}}) }}					
 					Import a Avatar
 					{{ form_row(registrationForm.userPicture, {'attr':{'class':'form-control'}}) }}
-				</div>
-				<div class="input-group-prepend">
 					{{ form_row(registrationForm.plainPassword, {'attr':{'class':'form-control'}}) }}
-				</div>
-				<div class="form-group text-center">
 					<button type="submit" class="btn">Register</button>
-					{{ form_end(registrationForm) }}
 				</div>
+				{{ form_end(registrationForm) }}
 			</div>
 		</div>
 	</div>

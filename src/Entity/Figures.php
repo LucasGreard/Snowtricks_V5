@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=App\Repository\FiguresRepository::class)
+ * @UniqueEntity(fields={"figureName"}, message="There is already a figure with this name")
  */
 class Figures
 {
@@ -19,7 +21,7 @@ class Figures
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $figureName;
 
@@ -60,7 +62,7 @@ class Figures
     private $figureVideo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="figure", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="Figure")
      */
     private $comments;
 
