@@ -4,10 +4,18 @@
 {% endblock %}
 
 {% block body %}
+	<section>
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+	</section>
 	{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor) %}
 		<h1>Edit Figures</h1>
 		{{ include('figures/_form.html.twig', {'button_label': 'Update'}) }}
 		{{ include('figures/editAndDeleteFigure.twig') }}
+
 	{% endif %}
 	<a href="{{ path('figures_index') }}">back to list</a>
 

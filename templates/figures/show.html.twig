@@ -5,7 +5,13 @@
 
 {% block body %}
 <h1>Figures</h1>
-
+<section>
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+</section>
 <table class="table">
 	<tbody>
 		<tr>
