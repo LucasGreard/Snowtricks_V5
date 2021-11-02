@@ -6,7 +6,6 @@ use App\Entity\Comments;
 use App\Entity\FigureImg;
 use App\Entity\Figures;
 use App\Form\CommentsType;
-use App\Entity\USer as EntityUSer;
 use App\Form\FiguresType;
 use App\Repository\FiguresRepository;
 use DateTimeImmutable;
@@ -14,10 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-
 
 /**
  * @Route("/")
@@ -97,7 +94,7 @@ class FiguresController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $comments = $em->getRepository("App\Entity\Comments")->findAll();
-
+        
         if ($this->getUser()) {
             $user = $this->getUser();
             $userName = sprintf("%s %s", $user->getUserLastName(), $user->getUserFirstName());
