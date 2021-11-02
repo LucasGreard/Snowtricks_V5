@@ -25,8 +25,13 @@ class MailerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $userEmail = $request->request->get('forgot_password');
-            $this->sendEmail($userEmail['userEmail'], $mailer);
+            //Savoir si l'utilateur existe en bdd
+            
+            dd($userEmail);
+
+            // $this->sendEmail($userEmail['userEmail'], $mailer);
         }
 
 
@@ -40,10 +45,6 @@ class MailerController extends AbstractController
         $email = (new Email())
             ->from('mestestemailoc@gmail.com')
             ->to($userEmail)
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            // ->priority(Email::PRIORITY_HIGH)
             ->subject('Time for Symfony Mailer!')
             ->text('Sending emails is fun again!')
             ->html('<p>See Twig integration for better HTML integration!</p>');
