@@ -30,10 +30,24 @@ class FiguresController extends AbstractController
     /**
      * @Route("/", name="figures_index", methods={"GET"})
      */
-    public function index(FiguresRepository $figuresRepository): Response
+    public function index(FiguresRepository $figuresRepository, Request $request): Response
     {
+        //On compte le nb de figure pour la pagination
+        $countFigureP = $figuresRepository->countFigure();
+        $countFigureP = ceil($countFigureP / 10);
+
+        $request = Request::createFromGlobals();
+        $page = $request->query->get('page');
+
+        if ($page != 0) {
+            return $this->render('figures/index.html.twig', [
+                'figures' => $figuresRepository->showFigurePagination($page),
+                'countPage' => $countFigureP
+            ]);
+        }
         return $this->render('figures/index.html.twig', [
-            'figures' => $figuresRepository->findAll(),
+            'figures' => $figuresRepository->showFigurePagination($page = 0),
+            'countPage' => $countFigureP
         ]);
     }
 
@@ -94,7 +108,7 @@ class FiguresController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $comments = $em->getRepository("App\Entity\Comments")->findAll();
-        
+
         if ($this->getUser()) {
             $user = $this->getUser();
             $userName = sprintf("%s %s", $user->getUserLastName(), $user->getUserFirstName());
