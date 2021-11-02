@@ -69,6 +69,11 @@ class USer implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $activate;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -243,6 +248,18 @@ class USer implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivate()
+    {
+        return $this->activate;
+    }
+
+    public function setActivate($activate): self
+    {
+        $this->activate = $activate;
 
         return $this;
     }
