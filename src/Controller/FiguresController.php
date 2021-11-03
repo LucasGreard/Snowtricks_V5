@@ -7,6 +7,7 @@ use App\Entity\FigureImg;
 use App\Entity\Figures;
 use App\Form\CommentsType;
 use App\Form\FiguresType;
+use App\Repository\CommentsRepository;
 use App\Repository\FiguresRepository;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,10 +31,24 @@ class FiguresController extends AbstractController
     /**
      * @Route("/", name="figures_index", methods={"GET"})
      */
-    public function index(FiguresRepository $figuresRepository): Response
+    public function index(FiguresRepository $figuresRepository, Request $request): Response
     {
+        //On compte le nb de figure pour la pagination
+        $countFigureP = $figuresRepository->countFigure();
+        $countFigureP = ceil($countFigureP / 10);
+
+        $request = Request::createFromGlobals();
+        $page = $request->query->get('page');
+
+        if ($page != 0) {
+            return $this->render('figures/index.html.twig', [
+                'figures' => $figuresRepository->showFigurePagination($page),
+                'countPage' => $countFigureP
+            ]);
+        }
         return $this->render('figures/index.html.twig', [
-            'figures' => $figuresRepository->findAll(),
+            'figures' => $figuresRepository->showFigurePagination($page = 0),
+            'countPage' => $countFigureP
         ]);
     }
 
@@ -90,11 +105,14 @@ class FiguresController extends AbstractController
     /**
      * @Route("/figure/id/{id}", name="figures_show", methods={"GET", "POST"})
      */
-    public function show(Figures $figure, Request $request): Response
+    public function show(Figures $figure, Request $request, CommentsRepository $commentRepo): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $comments = $em->getRepository("App\Entity\Comments")->findAll();
-        
+        $countCommentP = $commentRepo->countComment();
+        $countCommentP = ceil($countCommentP / 5);
+
+        $request = Request::createFromGlobals();
+        $page = $request->query->get('page');
+
         if ($this->getUser()) {
             $user = $this->getUser();
             $userName = sprintf("%s %s", $user->getUserLastName(), $user->getUserFirstName());
@@ -105,17 +123,22 @@ class FiguresController extends AbstractController
             $commentForm->handleRequest($request);
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
                 $this->addComment($comment, $userName, $figure, $user);
+                $this->flash->add('success', 'Votre commentaire a bien été ajouté');
             }
+
+
             return $this->render('figures/show.html.twig', [
                 'figure' => $figure,
                 'commentForm' => $commentForm->createView(),
-                'comments' => $comments
+                'comments' => $commentRepo->showCommentPagination($page),
+                'countPage' => $countCommentP
             ]);
         }
 
         return $this->render('figures/show.html.twig', [
             'figure' => $figure,
-            'comments' => $comments
+            'comments' => $commentRepo->showCommentPagination($page),
+            'countPage' => $countCommentP
         ]);
     }
 

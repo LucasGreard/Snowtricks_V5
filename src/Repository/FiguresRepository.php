@@ -19,6 +19,27 @@ class FiguresRepository extends ServiceEntityRepository
         parent::__construct($registry, Figures::class);
     }
 
+    public function showFigurePagination($offset)
+    {
+        if ($offset != 0) {
+            $offset = $offset * 10;
+        }
+
+        return $this->createQueryBuilder('f')
+            ->orderBy('f.id', 'ASC')
+            ->setMaxResults(10)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countFigure()
+    {
+        return $this->createQueryBuilder('f')
+            ->select('COUNT(f)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
     // /**
     //  * @return Figures[] Returns an array of Figures objects
     //  */
