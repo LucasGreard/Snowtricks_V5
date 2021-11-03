@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\USer as EntityUSer;
+use App\Repository\UserNewPWRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class UsersController extends AbstractController
             $userId = $user->getUserIdentifier();
             $entityManager = $this->getDoctrine()->getManager();
             $userImg = $entityManager->getRepository(EntityUSer::class)->findOneBy(['userEmail' => $userId]);
-            
+
             $this->unlinkImg($userImg);
 
             $userImg->setUserPicture($imgNewName);
