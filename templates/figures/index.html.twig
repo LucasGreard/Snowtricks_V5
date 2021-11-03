@@ -7,31 +7,7 @@
 
 
 	<img src="uploads/_default/landscape_snowboard.jpg" width="100%" class="img-fluid">
-	<section>
-		{% for message in app.flashes('success') %}
-			<script type="text/javascript">
-				$(window).on('load', function () {
-$('#exampleModal').modal('show');
-});
-hideModal = function () {
-$('#exampleModal').modal('hide');
-};
-			</script>
-			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">{{ message }}</h5>
-
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="hideModal()">Close</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		{% endfor %}
-	</section>
+	{{ include('security/modals.html.twig') }}
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 
 
@@ -68,11 +44,17 @@ $('#exampleModal').modal('hide');
 
 		{% endfor %}
 	</div>
-	{% for i in 0.. countPage -1 %}
-		<a href="{{ path('figures_index', { 'page': i }) }}">
-			{{i}}
-		</a>
-	{% endfor %}
+	<br/>
+	<nav aria-label="...">
+		<ul class="pagination justify-content-center">
+			{% for i in 0.. countPage -1 %}
+				<li class="page-item">
+					<a class="page-link" href="{{ path('figures_index', { 'page': i }) }}">{{i}}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</nav>
 
 
 {% endblock %}

@@ -4,99 +4,111 @@
 {% endblock %}
 
 {% block body %}
-<h1>Figures</h1>
-<section>
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success">
-			{{ message }}
-		</div>
-	{% endfor %}
-</section>
-<table class="table">
-	<tbody>
-		<tr>
-			<th>Id</th>
-			<td>{{ figure.id }}</td>
-		</tr>
-		<tr>
-			<th>FigureName</th>
-			<td>{{ figure.figureName }}</td>
-		</tr>
-		<tr>
-			<th>FigureDescription</th>
-			<td>{{ figure.figureDescription }}</td>
-		</tr>
-		<tr>
-			<th>FigureGroup</th>
-			<td>{{ figure.FigureGroup }}</td>
-		</tr>
-		<tr>
-			<th>FigureAuthor</th>
-			<td>{{ figure.figureAuthor }}</td>
-		</tr>
-		<tr>
-			<th>FigureDateAdd</th>
-			<td>{{ figure.figureDateAdd ? figure.figureDateAdd|date('Y-m-d H:i:s') : '' }}</td>
-		</tr>
-		<tr>
-			<th>FigureDateModif</th>
-			<td>{{ figure.figureDateModif ? figure.figureDateModif|date('Y-m-d H:i:s') : '' }}</td>
-		</tr>
-		<tr>
-			<th>Figure Img</th>
-			{% for image in figure.figureImgs %}
+	<h1>Figures</h1>
+	{{ include('security/modals.html.twig') }}
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ figure.id }}</td>
+			</tr>
+			<tr>
+				<th>FigureName</th>
+				<td>{{ figure.figureName }}</td>
+			</tr>
+			<tr>
+				<th>FigureDescription</th>
+				<td>{{ figure.figureDescription }}</td>
+			</tr>
+			<tr>
+				<th>FigureGroup</th>
+				<td>{{ figure.FigureGroup }}</td>
+			</tr>
+			<tr>
+				<th>FigureAuthor</th>
+				<td>{{ figure.figureAuthor }}</td>
+			</tr>
+			<tr>
+				<th>FigureDateAdd</th>
+				<td>{{ figure.figureDateAdd ? figure.figureDateAdd|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>FigureDateModif</th>
+				<td>{{ figure.figureDateModif ? figure.figureDateModif|date('Y-m-d H:i:s') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Figure Img</th>
+				{% for image in figure.figureImgs %}
+					<td>
+						<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="150px">
+					</td>
+				{% endfor %}
+			</tr>
+			<tr>
+				<th>FigureVideo</th>
 				<td>
-					<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="150px">
+					{{figure.figureVideo | raw}}
 				</td>
-			{% endfor %}
-		</tr>
-		<tr>
-			<th>FigureVideo</th>
-			<td>
-				{{figure.figureVideo | raw}}
-			</td>
-		</tr>
-	</tbody>
-</table>
+			</tr>
+		</tbody>
+	</table>
 
-<a href="{{ path('figures_index') }}">back to list</a>
-{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor or is_granted('ROLE_ADMIN')) %}
-	{{ include('figures/editAndDeleteFigure.twig') }}
-{% endif %}
+	<a href="{{ path('figures_index') }}">back to list</a>
 
+	<div class="container">
+		{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor or is_granted('ROLE_ADMIN')) %}
+			{{ include('figures/editAndDeleteFigure.twig') }}
+		{% endif %}
+		{% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) %}
+			<h2>
+				Laissez un commentaire
+			</h2>
+			{{form_start(commentForm)}}
+			<div class="form-control">
+				{{ form_row(commentForm.Content, {'attr':{'class':'form-control text-center'}}) }}
 
-<h2>
-	Liste des commentaires
-</h2>
-{% for comment in comments %}
+				{{ form_row(commentForm.Author, {'attr':{'class':'form-control text-center'}}) }}
 
-	{% if comment.user.userPicture == "../_default/userAvatar.png" %}
-		<img src="{{asset('/uploads/_default/' ~ comment.user.userPicture)}}" class="img-thumbnail">
-	{% else %}
-		<img src="{{asset('/uploads/users_img/' ~ comment.user.userPicture)}}" class="img-thumbnail">
-	{% endif %}
+				<div class="dropdown-divider"></div>
+				{{ form_row(commentForm.Submit, {'attr':{'class':'form-control text-center'}}) }}
+				<a href="{{ path('figures_index') }}">
+					->Back to list</a>
+			</div>
+			{{form_end(commentForm)}}
+		{% endif %}
+		{% for comment in comments %}
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-2">
+							{% if comment.user.userPicture == "../_default/userAvatar.png" %}
+								<img src="{{asset('/uploads/_default/' ~ comment.user.userPicture)}}" class="img img-rounded img-fluid">
+							{% else %}
+								<img src="{{asset('/uploads/users_img/' ~ comment.user.userPicture)}}" class="img img-rounded img-fluid">
+							{% endif %}
+							<p class="text-secondary text-center">{{comment.CreatedAt | date()}}</p>
+						</div>
+						<div class="col-md-10">
+							<p>
+								<strong>{{comment.Author}}</strong>
+							</p>
+							<div class="clearfix">{{comment.Content}}</div>
+							<p></p>
 
-
-	<p>{{comment.Author}}</p>
-	<p>{{comment.Content}}</p>
-	<p>{{comment.CreatedAt | date()}}</p>
-{% endfor %}
-
-
-{% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) %}
-	<h2>
-		Laissez un commentaire
-	</h2>
-	{{form_start(commentForm)}}
-	<div class="form-control">
-		{{ form_row(commentForm.Content, {'attr':{'class':'form-control text-center'}}) }}
-
-		{{ form_row(commentForm.Author, {'attr':{'class':'form-control text-center'}}) }}
-
-		<div class="dropdown-divider"></div>
-		{{ form_row(commentForm.Submit, {'attr':{'class':'form-control text-center'}}) }}
-		<a href="{{ path('figures_index') }}">
-			->Back to list</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		<nav aria-label="...">
+			<ul class="pagination justify-content-center">
+				{% for i in 0.. countPage -1 %}
+					<li class="page-item">
+						<a class="page-link" href="{{ path('figures_show', { 'page': i ,'id':figure.id}) }}">{{i}}
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</nav>
 	</div>
-</div>
-{{form_end(commentForm)}}{% endif %}{% endblock %}
+{% endblock %}
