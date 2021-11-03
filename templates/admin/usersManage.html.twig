@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	My settings
+{% endblock %}
+
+{% block body %}
+	<header class="py-5 bg-light border-bottom mb-4">
+		<div class="container">
+			<div class="text-center my-5">
+				<h1 class="fw-bolder">God Mod for User\'s Life !</h1>
+				<p class="lead mb-0 fst-italic">As an administrator, You are in control of a user\'s life or death ! What joy !</p>
+			</div>
+		</div>
+	</header>
+	<div class="containter">
+		<div class="row">
+			{% for user in users %}
+				<div class="col-lg-4 mb-2">
+					<ul class="list-group text-center">
+						<li class="list-group-item list-group-item-dark">Name :
+							{{user.userLastName}}
+							{{user.userFirstName}}
+						</li>
+						<li class="list-group-item disabled">Email :
+							{{user.userEmail}}
+						</li>
+						<li class="list-group-item disabled">Phone :
+							{{user.userPhone}}
+						</li>
+						<li class="list-group-item disabled">State :
+							{{user.roles|json_encode()}}
+						</li>
+						<li class="list-group-item disabled">Created at :
+							{{user.userDateAdd|date()}}
+						</li>
+						<li class="list-group-item disabled">is Valid ? :
+							{% if user.activate is null %}
+								Yes
+							{% else %}
+								No
+							{% endif %}
+						</li>
+						<form method="POST" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
+							<input name="idUser" type="hidden" value="">
+							<button type="submit" class="btn btn-outline-danger" name="deleteUser">Delete</button>
+						</form>
+					</ul>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
