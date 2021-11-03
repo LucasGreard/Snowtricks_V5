@@ -26,7 +26,7 @@ class FiguresRepository extends ServiceEntityRepository
         }
 
         return $this->createQueryBuilder('f')
-            ->orderBy('f.id', 'ASC')
+            ->orderBy('f.id', 'DESC')
             ->setMaxResults(10)
             ->setFirstResult($offset)
             ->getQuery()
