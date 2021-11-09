@@ -17,11 +17,11 @@
 	{{ include('security/modals.html.twig') }}
 	<div class="container">
 		<div class="row">
-			<div class="col-12 text-center">
-				{% for image in figure.figureImgs %}
-					<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="25%">
-				{% endfor %}
-			</div>
+			{% for image in figure.figureImgs %}
+				<div class="col-lg-4 ">
+					<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="100%">
+				</div>
+			{% endfor %}
 		</div>
 		<div class="row">
 			<div class="col-1"></div>
@@ -33,7 +33,9 @@
 		</div>
 		<div class="row">
 			<div class="col-12 text-center">
+				<div class="col-12">
 				{{figure.figureVideo | raw}}
+				</div>
 				<p class="text-center"><a href="{{ path('figures_index') }}">back to list</a></p>
 			</div>
 			{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor or is_granted('ROLE_ADMIN')) %}
