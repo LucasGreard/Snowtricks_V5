@@ -102,12 +102,16 @@
 		{% endfor %}
 		<nav aria-label="...">
 			<ul class="pagination justify-content-center">
+			{% if countPage != 0 %}
 				{% for i in 0.. countPage -1 %}
 					<li class="page-item">
 						<a class="page-link" href="{{ path('figures_show', { 'page': i ,'id':figure.id}) }}">{{i}}
 						</a>
 					</li>
 				{% endfor %}
+			{% endif %}
+			
+				
 			</ul>
 		</nav>
 	</div>

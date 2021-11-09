@@ -107,8 +107,12 @@ class FiguresController extends AbstractController
      */
     public function show(Figures $figure, Request $request, CommentsRepository $commentRepo): Response
     {
-        $countCommentP = $commentRepo->countComment();
-        $countCommentP = ceil($countCommentP / 5);
+        $countCommentP = $commentRepo->countComment($figure->getId());
+
+        if ($countCommentP !== 0) {
+            $countCommentP = ceil($countCommentP / 5);
+        }
+        // dd($countCommentP);
 
         $request = Request::createFromGlobals();
         $page = $request->query->get('page');
@@ -130,14 +134,14 @@ class FiguresController extends AbstractController
             return $this->render('figures/show.html.twig', [
                 'figure' => $figure,
                 'commentForm' => $commentForm->createView(),
-                'comments' => $commentRepo->showCommentPagination($page),
+                'comments' => $commentRepo->showCommentPagination($page, $figure->getId()),
                 'countPage' => $countCommentP
             ]);
         }
 
         return $this->render('figures/show.html.twig', [
             'figure' => $figure,
-            'comments' => $commentRepo->showCommentPagination($page),
+            'comments' => $commentRepo->showCommentPagination($page, $figure->getId()),
             'countPage' => $countCommentP
         ]);
     }
