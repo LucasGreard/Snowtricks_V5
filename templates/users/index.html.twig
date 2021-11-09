@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-				SnowTricks - My Settings
+	SnowTricks - My Settings
 {% endblock %}
 
 {% block body %}
@@ -23,7 +23,6 @@
 				<div class="d-flex align-items-start py-3 border-bottom">
 					<img src="{{asset('/uploads/users_img/' ~ app.user.userPicture) }}" class="img-thumbnail" alt="" style="max-width:10%;">
 					<div class="pl-sm-4 pl-2" id="img-section">
-
 						<form action="edit" method="post" enctype="multipart/form-data">
 							<b>Profile Photo</b>
 							<p>Accepted file type .png. Less than 1MB</p>
@@ -55,8 +54,6 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 	</div>
 {% endblock %}

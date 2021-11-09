@@ -5,15 +5,11 @@ namespace App\Controller;
 use App\Entity\USer as EntityUSer;
 use App\Form\NewPasswordType;
 use App\Repository\UserNewPWRepository;
-use Proxies\__CG__\App\Entity\USer as AppEntityUSer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\User;
-
 class ResetPasswordController extends AbstractController
 {
     private $flash;
@@ -52,8 +48,6 @@ class ResetPasswordController extends AbstractController
                         $password
                     )
                 );
-
-
                 $entityManager->flush();
                 $this->flash->add('success', 'Votre mot de passe a bien été changé !');
             } else {

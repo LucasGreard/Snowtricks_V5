@@ -35,12 +35,13 @@ class CommentsRepository extends ServiceEntityRepository
 
     public function countComment($figure_id)
     {
-        return $this->createQueryBuilder('c')
+        $countCommentP = $this->createQueryBuilder('c')
             ->select('COUNT(c)')
             ->where('c.Figure = ?1')
             ->setParameter(1, $figure_id)
             ->getQuery()
             ->getSingleScalarResult();
+        return $countCommentP !== 0 ? $countCommentP = ceil($countCommentP / 5) : 0;
     }
 
     // /**

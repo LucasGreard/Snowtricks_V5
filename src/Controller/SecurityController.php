@@ -42,6 +42,8 @@ class SecurityController extends AbstractController
             'activate' => null,
             'userEmail' => $lastUsername
         ]);
+
+        // return $userValid ? true : false;
         if ($userValid) {
             return true;
         } else {

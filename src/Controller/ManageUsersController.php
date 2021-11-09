@@ -31,7 +31,6 @@ class ManageUsersController extends AbstractController
      */
     public function delete(USer $user): Response
     {
-
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($user);
         $entityManager->flush();

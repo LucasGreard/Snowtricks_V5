@@ -6,19 +6,19 @@
 		</div>
 	</div>
 </header>
+
 {{ form_start(form) }}
 	<div class="container">
 		<div class="row">
 			<div class="col-2"></div>
 			<div class="col-lg-8 col-md-12 text-center">
-				
-					{{ form_row(form.figureName, {'attr':{'class':'form-control text-center'}}) }}
-					{{ form_row(form.figureDescription, {'attr':{'class':'form-control text-center'}}) }}
-					<br/>
-					{{ form_row(form.figureImg, {'attr':{'class':'form-control text-center'}}) }}
-					{{ form_row(form.figureVideo, {'attr':{'class':'form-control text-center'}}) }}
-					{{ form_row(form.FigureGroup, {'attr':{'class':'form-control text-center'}}) }}
-					{{ form_row(form.figureAuthor, {'attr':{'class':'form-control text-center'}}) }}
+				{{ form_row(form.figureName, {'attr':{'class':'form-control text-center'}}) }}
+				{{ form_row(form.figureDescription, {'attr':{'class':'form-control text-center'}}) }}
+				<br/>
+				{{ form_row(form.figureImg, {'attr':{'class':'form-control text-center'}}) }}
+				{{ form_row(form.figureVideo, {'attr':{'class':'form-control text-center'}}) }}
+				{{ form_row(form.FigureGroup, {'attr':{'class':'form-control text-center'}}) }}
+				{{ form_row(form.figureAuthor, {'attr':{'class':'form-control text-center'}}) }}
 			</div>
 		</div>
 	</div>
@@ -36,7 +36,6 @@
 					{{figure.figureVideo | raw}}
 			</div>
 		</div>
-		
 	{% endif %}
 	<div class="text-center">
 		<button class="btn">{{ button_label|default('Save') }}</button>

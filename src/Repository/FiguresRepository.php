@@ -35,10 +35,11 @@ class FiguresRepository extends ServiceEntityRepository
 
     public function countFigure()
     {
-        return $this->createQueryBuilder('f')
+        $countFigureP = $this->createQueryBuilder('f')
             ->select('COUNT(f)')
             ->getQuery()
             ->getSingleScalarResult();
+        return $countFigureP = ceil($countFigureP / 10);
     }
     // /**
     //  * @return Figures[] Returns an array of Figures objects

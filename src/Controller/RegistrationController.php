@@ -31,9 +31,9 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasherInterface, MailerInterface $mailer, USerRepository $userRepo): Response
     {
-
         $user = new USer();
         $user->setUserDateAdd(new DateTime('now'));
+
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -49,7 +49,6 @@ class RegistrationController extends AbstractController
             $userPicture = $form->get('userPicture')->getData();
             if ($userPicture) {
                 $nameImg = md5(uniqid()) . '.' . $userPicture->guessExtension();
-
                 $userPicture->move(
                     $this->getParameter('images_directory_user'),
                     $nameImg
@@ -59,7 +58,6 @@ class RegistrationController extends AbstractController
                 $nameImg = "../_default/userAvatar.png";
                 $user->setUserPicture($nameImg);
             }
-
             //Génération du token de validation
             $user->setActivate(md5(uniqid()));
             //On envoi le mail 
@@ -113,6 +111,7 @@ class RegistrationController extends AbstractController
 
         //On supprime le token
         $user->setActivate(null);
+        
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();

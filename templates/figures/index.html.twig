@@ -1,10 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-				SnowTricks - Learn tricks and Speak
-			{% endblock %}
+	SnowTricks - Learn tricks and Speak
+{% endblock %}
 
 {% block body %}
-
 
 	<img src="uploads/_default/landscape_snowboard.jpg" width="100%" class="img-fluid">
 	{{ include('security/modals.html.twig') }}
@@ -37,8 +36,8 @@
 				</div>
 			</div>
 			{% if loop.index is divisible by(4) %}
-			</div>
-			<div class="row">
+				</div>
+				<div class="row">
 			{% endif %}
 		{% endfor %}
 	</div>
@@ -53,6 +52,4 @@
 			{% endfor %}
 		</ul>
 	</nav>
-
-
 {% endblock %}

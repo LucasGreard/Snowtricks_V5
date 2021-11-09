@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-				SnowTricks - Figure
-			{% endblock %}
+	SnowTricks - Figure
+{% endblock %}
 
 {% block body %}
 	<header class="py-5 bg-light border-bottom mb-4">
@@ -47,24 +47,22 @@
 		</div>
 	</div>
 
-	
-
 	<div class="container">
 		{% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) %}
 			<h2>
 				Laissez un commentaire
 			</h2>
 			{{form_start(commentForm)}}
-			<div class="form-control">
-				{{ form_row(commentForm.Content, {'attr':{'class':'form-control text-center'}}) }}
+				<div class="form-control">
+					{{ form_row(commentForm.Content, {'attr':{'class':'form-control text-center'}}) }}
 
-				{{ form_row(commentForm.Author, {'attr':{'class':'form-control text-center'}}) }}
+					{{ form_row(commentForm.Author, {'attr':{'class':'form-control text-center'}}) }}
 
-				<div class="dropdown-divider"></div>
-				{{ form_row(commentForm.Submit, {'attr':{'class':'form-control text-center'}}) }}
-				<a href="{{ path('figures_index') }}">
-					->Back to list</a>
-			</div>
+					<div class="dropdown-divider"></div>
+					{{ form_row(commentForm.Submit, {'attr':{'class':'form-control text-center'}}) }}
+					<a href="{{ path('figures_index') }}">
+						->Back to list</a>
+				</div>
 			{{form_end(commentForm)}}
 		{% endif %}
 		{% for comment in comments %}
@@ -101,8 +99,6 @@
 					</li>
 				{% endfor %}
 			{% endif %}
-			
-				
 			</ul>
 		</nav>
 	</div>
