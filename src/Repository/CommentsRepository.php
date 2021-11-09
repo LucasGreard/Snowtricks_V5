@@ -18,24 +18,27 @@ class CommentsRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comments::class);
     }
-    public function showCommentPagination($offset)
+    public function showCommentPagination($offset, $figure_id)
     {
-        if ($offset != 0) {
+        if ($offset !== 0) {
             $offset = $offset * 5;
         }
-
         return $this->createQueryBuilder('c')
+            ->where('c.Figure = ?1')
             ->orderBy('c.Created_at', 'DESC')
+            ->setParameter(1, $figure_id)
             ->setMaxResults(5)
             ->setFirstResult($offset)
             ->getQuery()
             ->getResult();
     }
 
-    public function countComment()
+    public function countComment($figure_id)
     {
         return $this->createQueryBuilder('c')
             ->select('COUNT(c)')
+            ->where('c.Figure = ?1')
+            ->setParameter(1, $figure_id)
             ->getQuery()
             ->getSingleScalarResult();
     }
