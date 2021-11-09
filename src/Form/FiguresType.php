@@ -44,6 +44,7 @@ class FiguresType extends AbstractType
                 ]
             )
             ->add('figureVideo', TextType::class, [
+                'label' => false,
                 'required' => false,
                 'help' => "Vous pouvez ajouter plusieurs vidéos séparer par une virgule (,)"
             ])
@@ -56,13 +57,15 @@ class FiguresType extends AbstractType
                     'Slides' => "Slides",
                     'One foot tricks' => "One foot tricks",
                     'Old School' => "Old School"
-                ]
+                ],
+                'label' => "Group :"
             ])
             ->add('figureAuthor', TextType::class, [
                 'attr' => [
                     'readonly' => true,
                     'value' => $author
-                ]
+                ],
+                'label' => "Author :"
             ]);
     }
 

@@ -112,7 +112,6 @@ class FiguresController extends AbstractController
         if ($countCommentP !== 0) {
             $countCommentP = ceil($countCommentP / 5);
         }
-        // dd($countCommentP);
 
         $request = Request::createFromGlobals();
         $page = $request->query->get('page');

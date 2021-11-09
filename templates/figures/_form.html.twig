@@ -1,22 +1,45 @@
-{{ form_start(form) }}
-{{ form_widget(form) }}
-
-{% if app.request.attributes.get('_route')=='figures_edit' %}
-
-	<h2>Images</h2>
-	{% for image in figure.figureImgs %}
-
-		<div>
-			<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="150px">
-			<a href="{{ path('figure_deleteImg', {id: image.id}) }}" data-token="{{ csrf_token('delete' ~ image.id) }}" data-delete>Delete</a>
+<header class="py-5 bg-light border-bottom mb-4">
+	<div class="container">
+		<div class="text-center my-5">';
+			<h1 class="fw-bolder">Edit figure : {{figure.figureName}}
+			</h1>
 		</div>
-
-	{% endfor %}
-	<h2>Video</h2>
-	<div>
-		{{figure.figureVideo | raw}}
 	</div>
-{% endif %}
-
-<button class="btn">{{ button_label|default('Save') }}</button>
+</header>
+{{ form_start(form) }}
+	<div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-11 text-center">
+				
+					{{ form_row(form.figureName, {'attr':{'class':'form-control text-center'}}) }}
+					{{ form_row(form.figureDescription, {'attr':{'class':'form-control text-center'}}) }}
+					<br/>
+					{{ form_row(form.figureImg, {'attr':{'class':'form-control text-center'}}) }}
+					{{ form_row(form.figureVideo, {'attr':{'class':'form-control text-center'}}) }}
+					{{ form_row(form.FigureGroup, {'attr':{'class':'form-control text-center'}}) }}
+					{{ form_row(form.figureAuthor, {'attr':{'class':'form-control text-center'}}) }}
+			</div>
+		</div>
+	</div>
+	{% if app.request.attributes.get('_route')=='figures_edit' %}
+		<div class="row">
+			{% for image in figure.figureImgs %}
+				<div class="col-4 text-center">
+					<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="70%">
+					<a href="{{ path('figure_deleteImg', {id: image.id}) }}" data-token="{{ csrf_token('delete' ~ image.id) }}" data-delete >Delete</a>
+				</div>
+			{% endfor %}
+		</div>
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-4 text-center">
+					{{figure.figureVideo | raw}}
+			</div>
+		</div>
+		
+	{% endif %}
+	<div class="text-center">
+		<button class="btn">{{ button_label|default('Save') }}</button>
+	</div>
 {{ form_end(form) }}

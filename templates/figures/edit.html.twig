@@ -14,10 +14,14 @@
 	{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor) %}
 		<h1>Edit Figures</h1>
 		{{ include('figures/_form.html.twig', {'button_label': 'Update'}) }}
-		{{ include('figures/editAndDeleteFigure.twig') }}
-
+		<div class="text-center">
+			{{ include('figures/editAndDeleteFigure.twig') }}
+		</div>
 	{% endif %}
-	<a href="{{ path('figures_index') }}">back to list</a>
+	<div class="text-center">
+		<a href="{{ path('figures_index') }}">back to list</a>
+	</div>
+	
 
 
 {% endblock %}
