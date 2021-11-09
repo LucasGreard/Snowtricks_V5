@@ -4,61 +4,49 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Figures</h1>
+	<header class="py-5 bg-light border-bottom mb-4">
+		<div class="container">
+			<div class="text-center my-5">';
+				<h1 class="fw-bolder">{{ figure.figureName }}
+				</h1>
+				<p class="lead mb-0 fst-italic "> created by {{ figure.figureAuthor }} at {{figure.figureDateAdd|date()}}</p>
+				<p class="lead mb-0 fst-italic"> Group : {{ figure.FigureGroup }}</p>
+			</div>
+		</div>
+	</header>
 	{{ include('security/modals.html.twig') }}
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ figure.id }}</td>
-			</tr>
-			<tr>
-				<th>FigureName</th>
-				<td>{{ figure.figureName }}</td>
-			</tr>
-			<tr>
-				<th>FigureDescription</th>
-				<td>{{ figure.figureDescription }}</td>
-			</tr>
-			<tr>
-				<th>FigureGroup</th>
-				<td>{{ figure.FigureGroup }}</td>
-			</tr>
-			<tr>
-				<th>FigureAuthor</th>
-				<td>{{ figure.figureAuthor }}</td>
-			</tr>
-			<tr>
-				<th>FigureDateAdd</th>
-				<td>{{ figure.figureDateAdd ? figure.figureDateAdd|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-			<tr>
-				<th>FigureDateModif</th>
-				<td>{{ figure.figureDateModif ? figure.figureDateModif|date('Y-m-d H:i:s') : '' }}</td>
-			</tr>
-			<tr>
-				<th>Figure Img</th>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center">
 				{% for image in figure.figureImgs %}
-					<td>
-						<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="150px">
-					</td>
+					<img src="{{asset('/uploads/figures_img/' ~ image.imgName) }}" alt="Image" width="25%">
 				{% endfor %}
-			</tr>
-			<tr>
-				<th>FigureVideo</th>
-				<td>
-					{{figure.figureVideo | raw}}
-				</td>
-			</tr>
-		</tbody>
-	</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-11 text-center">
+			
+				{{ figure.figureDescription }}
+				<p class="lead mb-0 fst-italic "> last modification : {{ figure.figureDateModif ? figure.figureDateModif|date('Y-m-d H:i:s') : 'None' }}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 text-center">
+				{{figure.figureVideo | raw}}
+				<p class="text-center"><a href="{{ path('figures_index') }}">back to list</a></p>
+			</div>
+			{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor or is_granted('ROLE_ADMIN')) %}
+				<div class="col-12 text-center">
+					{{ include('figures/editAndDeleteFigure.twig') }}
+				</div>
+			{% endif %}
+		</div>
+	</div>
 
-	<a href="{{ path('figures_index') }}">back to list</a>
+	
 
 	<div class="container">
-		{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor or is_granted('ROLE_ADMIN')) %}
-			{{ include('figures/editAndDeleteFigure.twig') }}
-		{% endif %}
 		{% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) %}
 			<h2>
 				Laissez un commentaire
