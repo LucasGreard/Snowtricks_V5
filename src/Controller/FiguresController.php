@@ -35,7 +35,6 @@ class FiguresController extends AbstractController
     {
         //On compte le nb de figure pour la pagination
         $countFigureP = $figuresRepository->countFigure();
-        $countFigureP = ceil($countFigureP / 10);
 
         $request = Request::createFromGlobals();
         $page = $request->query->get('page');
@@ -64,6 +63,7 @@ class FiguresController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $figureDateAdd = $this->addDateTimeNow();
+
             $figure->setFigureDateAdd($figureDateAdd);
 
             $figuresImg = $form->get('figureImg')->getData();
@@ -73,6 +73,7 @@ class FiguresController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($figure);
             $entityManager->flush();
+
             $this->flash->add('success', 'Votre figure a bien été ajouté');
 
             return $this->redirectToRoute('figures_index', [], Response::HTTP_SEE_OTHER);
@@ -97,7 +98,9 @@ class FiguresController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($figureImg);
             $entityManager->flush();
+
             $this->flash->add('success', 'Votre image a bien été supprimé');
+
             return new JsonResponse(['success' => 1]);
         }
         return new JsonResponse(['error' => 'Token Invalid'], 400);
@@ -109,10 +112,6 @@ class FiguresController extends AbstractController
     {
         $countCommentP = $commentRepo->countComment($figure->getId());
 
-        if ($countCommentP !== 0) {
-            $countCommentP = ceil($countCommentP / 5);
-        }
-
         $request = Request::createFromGlobals();
         $page = $request->query->get('page');
 
@@ -122,10 +121,13 @@ class FiguresController extends AbstractController
 
 
             $comment = new Comments();
+
             $commentForm = $this->createForm(CommentsType::class, $comment);
             $commentForm->handleRequest($request);
+
             if ($commentForm->isSubmitted() && $commentForm->isValid()) {
                 $this->addComment($comment, $userName, $figure, $user);
+
                 $this->flash->add('success', 'Votre commentaire a bien été ajouté');
             }
 
@@ -230,8 +232,8 @@ class FiguresController extends AbstractController
         $comment->setUserPicture($user->getUserPicture());
         $comment->setUser($user);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($comment);
-        $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
     }
 }

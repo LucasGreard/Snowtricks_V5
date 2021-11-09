@@ -11,16 +11,12 @@
 			{% endblock %}
 		</title>
 		<!-- Favicon-->
-		<link
-		rel="icon" type="image/x-icon" href="public/img/favicon.ico"/>
-
+		<link rel="icon" type="image/x-icon" href="public/img/favicon.ico"/>
 		<!-- Core theme CSS -->
+
 		{% block stylesheets %}
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		{% endblock %}
-		{# <link href="public/css/style.css" rel="stylesheet" />
-																																																																																																																																																																																																																																																																																																																																										                    <link href="public/css/bootstrap.css" rel="stylesheet" />
-																																																																																																																																																																																																																																																																																																																																										                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"> #}
 
 		<!-- script JS -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -46,13 +42,12 @@
 						<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 							{% if is_granted('ROLE_USER') %}
 								{% if is_granted('ROLE_USER') %}
-								<li class="nav-item ">
-									<a class="nav-link" href="/users/">My settings</a>
-								</li>
+									<li class="nav-item ">
+										<a class="nav-link" href="/users/">My settings</a>
+									</li>
 								{% if app.user.activate == null %}
 									<a class="nav-link" href="{{ path('figures_new') }}">Create new figure</a>
 								{% endif %}
-							
 								{% if is_granted('ROLE_ADMIN') %}
 									<a class="nav-link" href="{{ path('users_manage') }}">Manage Users</a>
 								{% endif %}
@@ -68,6 +63,7 @@
 				</div>
 			</nav>
 		{% endblock %}
+
 		{% block body %}{% endblock %}
 		{% block footer %}
 		<!-- Footer-->
@@ -131,4 +127,4 @@
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		{% endblock %}
 	</body>
-</html></body></html>
+</html>

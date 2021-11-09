@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-				SnowTricks - Create new figure
-			{% endblock %}
+	SnowTricks - Create new figure
+{% endblock %}
 
 {% block body %}
 	<header class="py-5 bg-light border-bottom mb-4">
@@ -18,29 +18,28 @@
 			<div class="col-2"></div>
 			<div class="col-lg-8 col-md-12 text-center">
 				{{form_start(form)}}
-				<div class="form-control">
-					{{ form_row(form.figureName, {'attr':{'class':'form-control text-center'}}) }}
+					<div class="form-control">
+						{{ form_row(form.figureName, {'attr':{'class':'form-control text-center'}}) }}
 
-					{{ form_row(form.figureDescription, {'attr':{'class':'form-control text-center'}}) }}
+						{{ form_row(form.figureDescription, {'attr':{'class':'form-control text-center'}}) }}
 
-					<div class="dropdown-divider"></div>
-					{{ form_row(form.figureImg, {'attr':{'class':'form-control text-center'}}) }}
+						<div class="dropdown-divider"></div>
+						{{ form_row(form.figureImg, {'attr':{'class':'form-control text-center'}}) }}
 
-					{{ form_row(form.figureVideo, {'attr':{'class':'form-control text-center'}}) }}
-					<a href='https://support.google.com/youtube/answer/171780?hl=fr'>Comment intégrer une vidéo</a>
-					<div class="dropdown-divider"></div>
-					{{ form_row(form.FigureGroup, {'attr':{'class':'form-control text-center'}}) }}
+						{{ form_row(form.figureVideo, {'attr':{'class':'form-control text-center'}}) }}
+						<a href='https://support.google.com/youtube/answer/171780?hl=fr'>Comment intégrer une vidéo</a>
+						<div class="dropdown-divider"></div>
+						{{ form_row(form.FigureGroup, {'attr':{'class':'form-control text-center'}}) }}
 
-					{{ form_row(form.figureAuthor, {'attr':{'class':'form-control text-center'}}) }}
-					<div class="form-group text-center">
-						<button type="submit" class="btn">Register</button>
-						<a href="{{ path('figures_index') }}">
-							->Back to list</a>
+						{{ form_row(form.figureAuthor, {'attr':{'class':'form-control text-center'}}) }}
+						<div class="form-group text-center">
+							<button type="submit" class="btn">Register</button>
+							<a href="{{ path('figures_index') }}">
+								->Back to list</a>
+						</div>
 					</div>
-				</div>
 				{{form_end(form)}}
 			</div>
 		</div>
 	</div>
-
 {% endblock %}

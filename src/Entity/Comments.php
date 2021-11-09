@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentsRepository;
+// use App\Repository\CommentsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

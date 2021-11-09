@@ -34,14 +34,11 @@ class MailerController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $userEmail = $request->request->get('forgot_password');
 
-            //Savoir si l'utilateur existe en bdd   
             $ifExist = $userRepo->findOneBy([
                 'userEmail' => $userEmail['userEmail']
             ]);
-
             if ($ifExist) {
                 $newMdp->setToken(md5(uniqid()));
                 $_token = $newMdp->getToken();
@@ -55,14 +52,13 @@ class MailerController extends AbstractController
                 $this->sendEmail($userEmail['userEmail'], $mailer, $_token);
 
                 $this->flash->add('success', 'Un mail vous a été envoyé !');
+
                 return $this->redirectToRoute('mailer');
             } else {
                 $this->flash->add('success', 'Aucun compte existant');
                 return $this->redirectToRoute('mailer');
             }
         }
-
-
         return $this->render('mailer/index.html.twig', [
             'forgotPassword' => $form->createView(),
         ]);
@@ -78,7 +74,6 @@ class MailerController extends AbstractController
             ->context([
                 'token' => $_token
             ]);
-
         $mailer->send($email);
     }
 }

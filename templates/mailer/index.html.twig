@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}
-				SnowTricks - Forgot Password
-			{% endblock %}
+	SnowTricks - Forgot Password
+{% endblock %}
 
 {% block body %}
 	<header class="py-5 bg-light border-bottom mb-4">
@@ -16,14 +15,14 @@
 	</header>
 	{{ include('security/modals.html.twig') }}
 	{{ form_start(forgotPassword) }}
-	<div class="form-control">
-		{{ form_row(forgotPassword.userEmail, {'attr':{'class':'form-control'}}) }}
-		<div class="form-group text-center">
-			<button type="submit" class="btn">Demander un nouveau mot de passe</button>
-			<a href="{{ path('app_login') }}">
-			<br/>
-				->Back to login</a>
+		<div class="form-control">
+			{{ form_row(forgotPassword.userEmail, {'attr':{'class':'form-control'}}) }}
+			<div class="form-group text-center">
+				<button type="submit" class="btn">Demander un nouveau mot de passe</button>
+				<a href="{{ path('app_login') }}">
+				<br/>
+					->Back to login</a>
+			</div>
 		</div>
-	</div>
 	{{form_end(forgotPassword)}}
 {% endblock %}
