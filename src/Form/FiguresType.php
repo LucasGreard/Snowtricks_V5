@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Figures;
+use App\Entity\USer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -14,17 +15,12 @@ use Symfony\Component\Security\Core\Security;
 
 class FiguresType extends AbstractType
 {
-    private $security;
 
-    public function __construct(Security $security)
+    public function __construct()
     {
-        $this->security = $security;
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $user = $this->security->getUser();
-        $author = $user->getUserLastName() . " " . $user->getUserFirstName();
-
         $builder
             ->add('figureName', TextType::class, [
                 'label' => "Nom de la figure"
@@ -63,7 +59,6 @@ class FiguresType extends AbstractType
             ->add('figureAuthor', TextType::class, [
                 'attr' => [
                     'readonly' => true,
-                    'value' => $author
                 ],
                 'label' => "Author :"
             ]);

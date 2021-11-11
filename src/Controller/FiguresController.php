@@ -106,7 +106,7 @@ class FiguresController extends AbstractController
         return new JsonResponse(['error' => 'Token Invalid'], 400);
     }
     /**
-     * @Route("/figure/id/{id}", name="figures_show", methods={"GET", "POST"})
+     * @Route("/figure/id/{{figureName}}", name="figures_show", methods={"GET", "POST"})
      */
     public function show(Figures $figure, Request $request, CommentsRepository $commentRepo): Response
     {
@@ -174,7 +174,7 @@ class FiguresController extends AbstractController
             $this->flash->add('success', 'Votre figure a bien été modifié');
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('figures_show', ['id' => $figure->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('figures_show', ['figureName' => $figure->getFigureName()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('figures/edit.html.twig', [

@@ -10,8 +10,14 @@
 			<div class="text-center my-5">';
 				<h1 class="fw-bolder">{{ figure.figureName }}
 				</h1>
-				<p class="lead mb-0 fst-italic "> created by {{ figure.figureAuthor }} at {{figure.figureDateAdd|date()}}</p>
-				<p class="lead mb-0 fst-italic"> Group : {{ figure.FigureGroup }}</p>
+				<p class="lead mb-0 fst-italic ">
+					created by
+					{{ figure.figureAuthor }}
+					at
+					{{figure.figureDateAdd|date()}}</p>
+				<p class="lead mb-0 fst-italic">
+					Group :
+					{{ figure.FigureGroup }}</p>
 			</div>
 		</div>
 	</header>
@@ -27,24 +33,30 @@
 		<div class="row">
 			<div class="col-1"></div>
 			<div class="col-11 text-center">
-			
+
 				{{ figure.figureDescription }}
-				<p class="lead mb-0 fst-italic "> last modification : {{ figure.figureDateModif ? figure.figureDateModif|date('Y-m-d H:i:s') : 'None' }}</p>
+				<p class="lead mb-0 fst-italic ">
+					last modification :
+					{{ figure.figureDateModif ? figure.figureDateModif|date('Y-m-d H:i:s') : 'None' }}</p>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-12 text-center">
-				<div class="col-12">
-				{{figure.figureVideo | raw}}
+
+			{% set lien = figure.figureVideo|split(',') %}
+			{% for i in 0.. lien|length -1 %}
+				<div class="col-xl-4">
+					<iframe width="100%" height="315" src="https://www.youtube.com/embed/{{lien[i]}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
-				<p class="text-center"><a href="{{ path('figures_index') }}">back to list</a></p>
-			</div>
+			{% endfor %}
 			{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " " ~ app.user.userFirstName) == figure.figureAuthor or is_granted('ROLE_ADMIN')) %}
 				<div class="col-12 text-center">
 					{{ include('figures/editAndDeleteFigure.twig') }}
 				</div>
 			{% endif %}
 		</div>
+		<p class="text-center">
+			<a href="{{ path('figures_index') }}">back to list</a>
+		</p>
 	</div>
 
 	<div class="container">
@@ -53,16 +65,16 @@
 				Laissez un commentaire
 			</h2>
 			{{form_start(commentForm)}}
-				<div class="form-control">
-					{{ form_row(commentForm.Content, {'attr':{'class':'form-control text-center'}}) }}
+			<div class="form-control">
+				{{ form_row(commentForm.Content, {'attr':{'class':'form-control text-center'}}) }}
 
-					{{ form_row(commentForm.Author, {'attr':{'class':'form-control text-center'}}) }}
+				{{ form_row(commentForm.Author, {'attr':{'class':'form-control text-center', 'value': app.user.userLastName ~ ' ' ~ app.user.userFirstName}}) }}
 
-					<div class="dropdown-divider"></div>
-					{{ form_row(commentForm.Submit, {'attr':{'class':'form-control text-center'}}) }}
-					<a href="{{ path('figures_index') }}">
-						->Back to list</a>
-				</div>
+				<div class="dropdown-divider"></div>
+				{{ form_row(commentForm.Submit, {'attr':{'class':'form-control text-center'}}) }}
+				<a href="{{ path('figures_index') }}">
+					->Back to list</a>
+			</div>
 			{{form_end(commentForm)}}
 		{% endif %}
 		{% for comment in comments %}
@@ -91,14 +103,14 @@
 		{% endfor %}
 		<nav aria-label="...">
 			<ul class="pagination justify-content-center">
-			{% if countPage != 0 %}
-				{% for i in 0.. countPage -1 %}
-					<li class="page-item">
-						<a class="page-link" href="{{ path('figures_show', { 'page': i ,'id':figure.id}) }}">{{i}}
-						</a>
-					</li>
-				{% endfor %}
-			{% endif %}
+				{% if countPage != 0 %}
+					{% for i in 0.. countPage -1 %}
+						<li class="page-item">
+							<a class="page-link" href="{{ path('figures_show', { 'page': i ,'figureName': figure.figureName}) }}">{{i}}
+							</a>
+						</li>
+					{% endfor %}
+				{% endif %}
 			</ul>
 		</nav>
 	</div>

@@ -43,11 +43,6 @@ class SecurityController extends AbstractController
             'userEmail' => $lastUsername
         ]);
 
-        // return $userValid ? true : false;
-        if ($userValid) {
-            return true;
-        } else {
-            return false;
-        }
+        return is_null($userValid);
     }
 }

@@ -17,7 +17,7 @@
 					{% endfor %}
 
 					<div class="card-body">
-						<a href="{{ path('figures_show', {'id': figure.id}) }}">
+						<a href="{{ path('figures_show', {'figureName': figure.figureName}) }}">
 							<h5 class="card-title">{{figure.figureName}}</h5>
 						</a>
 					</div>
@@ -36,8 +36,8 @@
 				</div>
 			</div>
 			{% if loop.index is divisible by(4) %}
-				</div>
-				<div class="row">
+			</div>
+			<div class="row">
 			{% endif %}
 		{% endfor %}
 	</div>
