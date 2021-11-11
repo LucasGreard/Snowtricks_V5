@@ -21,9 +21,6 @@ class FiguresType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $user = new USer();
-        $author = $user->getUserLastName() . " " . $user->getUserFirstName();
-
         $builder
             ->add('figureName', TextType::class, [
                 'label' => "Nom de la figure"
@@ -62,7 +59,6 @@ class FiguresType extends AbstractType
             ->add('figureAuthor', TextType::class, [
                 'attr' => [
                     'readonly' => true,
-                    'value' => $author
                 ],
                 'label' => "Author :"
             ]);

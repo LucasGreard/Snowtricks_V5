@@ -20,19 +20,15 @@ class CommentsType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $user = new USer();
-        if ($user) {
-            $author = $user->getUserLastName() . " " . $user->getUserFirstName();
-            $builder
-                ->add('Content', TextareaType::class)
-                ->add('Author', TextType::class, [
-                    'attr' => [
-                        'readonly' => true,
-                        'value' => $author
-                    ]
-                ])
-                ->add('Submit', SubmitType::class);
-        }
+        $builder
+            ->add('Content', TextareaType::class)
+            ->add('Author', TextType::class, [
+                'attr' => [
+                    'readonly' => true,
+
+                ]
+            ])
+            ->add('Submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
