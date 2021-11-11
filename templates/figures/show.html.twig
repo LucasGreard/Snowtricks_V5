@@ -95,7 +95,9 @@
 							</p>
 							<div class="clearfix">{{comment.Content}}</div>
 							<p></p>
-
+							{% if (is_granted('ROLE_USER') and (app.user.userLastName ~ " "~ app.user.userFirstName) == comment.Author or is_granted('ROLE_ADMIN')) %}
+								{{ include('commentaire/deleteCommentaire.html.twig') }}
+							{% endif %}
 						</div>
 					</div>
 				</div>
