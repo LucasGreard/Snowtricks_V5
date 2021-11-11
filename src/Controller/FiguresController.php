@@ -106,7 +106,7 @@ class FiguresController extends AbstractController
         return new JsonResponse(['error' => 'Token Invalid'], 400);
     }
     /**
-     * @Route("/figure/id/{{figureName}}", name="figures_show", methods={"GET", "POST"})
+     * @Route("/figure/id/{figureName}", name="figures_show", methods={"GET", "POST"})
      */
     public function show(Figures $figure, Request $request, CommentsRepository $commentRepo): Response
     {
@@ -192,10 +192,29 @@ class FiguresController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($figure);
             $entityManager->flush();
+
+            $this->flash->add('success', 'Votre figure a bien été supprimé');
         }
 
         return $this->redirectToRoute('figures_index', [], Response::HTTP_SEE_OTHER);
     }
+    /**
+     * @Route("/comment/{id}", name="comment_delete", methods={"POST"})
+     */
+    public function deleteComment(Request $request, Comments $comment): Response
+    {
+
+        if ($this->isCsrfTokenValid('comment_delete' . $comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+
+            $this->flash->add('success', 'Votre commentaire a bien été supprimé');
+        }
+
+        return $this->redirectToRoute('figures_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 
     private function addDateTimeNow()
     {
