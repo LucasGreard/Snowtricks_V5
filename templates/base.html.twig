@@ -11,7 +11,8 @@
 			{% endblock %}
 		</title>
 		<!-- Favicon-->
-		<link rel="icon" type="image/x-icon" href="public/img/favicon.ico"/>
+		<link
+		rel="icon" type="image/x-icon" href="public/img/favicon.ico"/>
 		<!-- Core theme CSS -->
 
 		{% block stylesheets %}
@@ -43,16 +44,16 @@
 							{% if is_granted('ROLE_USER') %}
 								{% if is_granted('ROLE_USER') %}
 									<li class="nav-item ">
-										<a class="nav-link" href="/users/">My settings</a>
+										<a class="nav-link" href="/users/">Mes paramètres</a>
 									</li>
-								{% if app.user.activate == null %}
-									<a class="nav-link" href="{{ path('figures_new') }}">Create new figure</a>
+									{% if app.user.activate == null %}
+										<a class="nav-link" href="{{ path('figures_new') }}">Create new figure</a>
+									{% endif %}
+									{% if is_granted('ROLE_ADMIN') %}
+										<a class="nav-link" href="{{ path('users_manage') }}">Manage Users</a>
+									{% endif %}
+									<a class="nav-link link-danger" href="/auth/logout">Disconnect</a>
 								{% endif %}
-								{% if is_granted('ROLE_ADMIN') %}
-									<a class="nav-link" href="{{ path('users_manage') }}">Manage Users</a>
-								{% endif %}
-								<a class="nav-link link-danger" href="/auth/logout">Disconnect</a>
-							{% endif %}
 							{% else %}
 								<li class="nav-item">
 									<a class="nav-link " href="/auth/login">Sign On</a>
@@ -66,7 +67,7 @@
 
 		{% block body %}{% endblock %}
 		{% block footer %}
-		<!-- Footer-->
+			<!-- Footer-->
 			<footer class="py-5 bg-dark">
 				<div class="container">
 					<div class="row text-center">
